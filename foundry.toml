@@ -1,0 +1,12 @@
+[profile.default]
+src = "code"
+test = "code"
+script = "deployment"
+out = "out"
+libs = ["lib"]
+
+remappings = [
+    "@code/=code/"
+]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
