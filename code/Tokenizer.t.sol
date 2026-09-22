@@ -18,37 +18,37 @@ contract TokenizerTest is Test {
     }
 
     function test_Getters() public {
-        uint256 amount = 200 * 10**18;
+        uint256 amount = 200 * 10 ** 18;
 
         token.approve(alice, amount);
 
         assertEq(token.name(), "Token42");
         assertEq(token.symbol(), "T42");
         assertEq(token.decimals(), 18);
-        assertEq(token.totalSupply(), INITIAL_SUPPLY * 10**18);
-        assertEq(token.balanceOf(owner), INITIAL_SUPPLY * 10**18);
+        assertEq(token.totalSupply(), INITIAL_SUPPLY * 10 ** 18);
+        assertEq(token.balanceOf(owner), INITIAL_SUPPLY * 10 ** 18);
         assertEq(token.owner(), owner);
         assertEq(token.allowance(owner, alice), amount);
     }
 
     function test_Transfer() public {
-        uint256 amount = 100 * 10**18;
+        uint256 amount = 100 * 10 ** 18;
 
         bool success = token.transfer(alice, amount);
-        
+
         assertTrue(success);
         assertEq(token.balanceOf(alice), amount);
-        assertEq(token.balanceOf(owner), (INITIAL_SUPPLY * 10**18) - amount);
+        assertEq(token.balanceOf(owner), (INITIAL_SUPPLY * 10 ** 18) - amount);
     }
 
     function test_RevertWhen_TransferInsufficientBalance() public {
         vm.prank(alice);
         vm.expectRevert("Insufficient balance");
-        token.transfer(bob, 50 * 10**18);
+        token.transfer(bob, 50 * 10 ** 18);
     }
 
     function test_ApproveAndTransferFrom() public {
-        uint256 amount = 200 * 10**18;
+        uint256 amount = 200 * 10 ** 18;
 
         token.approve(alice, amount);
         assertEq(token.allowance(owner, alice), amount);
@@ -60,15 +60,15 @@ contract TokenizerTest is Test {
     }
 
     function test_RevertWhen_TransferFromInsufficientBalance() public {
-        uint256 amount = 200 * 10**18;
+        uint256 amount = 200 * 10 ** 18;
 
         token.approve(alice, amount);
         vm.expectRevert("Insufficient balance");
-        token.transferFrom(owner, bob, (INITIAL_SUPPLY * 10**18) + 1);
+        token.transferFrom(owner, bob, (INITIAL_SUPPLY * 10 ** 18) + 1);
     }
 
     function test_RevertWhen_TransferFromInsufficientPowerOfAttorney() public {
-        uint256 amount = 200 * 10**18;
+        uint256 amount = 200 * 10 ** 18;
 
         token.approve(alice, amount);
         vm.expectRevert("Insufficient power of attorney");
@@ -76,12 +76,12 @@ contract TokenizerTest is Test {
     }
 
     function test_MintAsOwner() public {
-        uint256 mintAmount = 500 * 10**18;
-        
+        uint256 mintAmount = 500 * 10 ** 18;
+
         token.mint(alice, mintAmount);
-        
+
         assertEq(token.balanceOf(alice), mintAmount);
-        assertEq(token.totalSupply(), (INITIAL_SUPPLY * 10**18) + mintAmount);
+        assertEq(token.totalSupply(), (INITIAL_SUPPLY * 10 ** 18) + mintAmount);
     }
 
     function test_RevertWhen_MintAsNonOwner() public {
@@ -91,16 +91,16 @@ contract TokenizerTest is Test {
     }
 
     function test_Burn() public {
-        uint256 burnAmount = 100 * 10**18;
-        
+        uint256 burnAmount = 100 * 10 ** 18;
+
         token.burn(burnAmount);
-        
-        assertEq(token.balanceOf(owner), (INITIAL_SUPPLY * 10**18) - burnAmount);
-        assertEq(token.totalSupply(), (INITIAL_SUPPLY * 10**18) - burnAmount);
+
+        assertEq(token.balanceOf(owner), (INITIAL_SUPPLY * 10 ** 18) - burnAmount);
+        assertEq(token.totalSupply(), (INITIAL_SUPPLY * 10 ** 18) - burnAmount);
     }
 
     function test_RevertWhen_BurnExceedsBalance() public {
         vm.expectRevert("Burn amount exceeds balance");
-        token.burn((INITIAL_SUPPLY * 10**18) + 1);
+        token.burn((INITIAL_SUPPLY * 10 ** 18) + 1);
     }
 }
