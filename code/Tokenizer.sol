@@ -5,10 +5,10 @@ contract Tokenizer {
     address private _owner;
     string private _name;
     string private _symbol;
-    uint8 private _decimals;
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
     mapping(address => mapping(address => uint256)) private _allowances;
+    uint8 private constant DECIMALS = 18;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
@@ -20,11 +20,13 @@ contract Tokenizer {
     }
 
     constructor(string memory name_, string memory symbol_, uint256 initialSupply_) {
+        require(bytes(name_).length > 0, "Name cannot be empty");
+        require(bytes(symbol_).length > 0, "Symbol cannot be empty");
+
         _owner = msg.sender;
         _name = name_;
         _symbol = symbol_;
-        _decimals = 18;
-        _totalSupply = initialSupply_ * (10 ** uint256(_decimals));
+        _totalSupply = initialSupply_ * (10 ** uint256(DECIMALS));
         _balances[msg.sender] = _totalSupply;
 
         emit OwnershipTransferred(address(0), msg.sender);
@@ -43,8 +45,8 @@ contract Tokenizer {
         return _symbol;
     }
 
-    function decimals() public view returns (uint8) {
-        return _decimals;
+    function decimals() public pure returns (uint8) {
+        return DECIMALS;
     }
 
     function totalSupply() public view returns (uint256) {
@@ -57,6 +59,17 @@ contract Tokenizer {
 
     function allowance(address owner_, address spender) public view returns (uint256) {
         return _allowances[owner_][spender];
+    }
+
+    function transferOwnership(address newOwner) public onlyOwner returns (bool) {
+        require(newOwner != address(0), "New owner is the zero address");
+    
+        address previousOwner = _owner;
+        _owner = newOwner;
+    
+        emit OwnershipTransferred(previousOwner, newOwner);
+    
+        return true;
     }
 
     function mint(address to, uint256 amount) public onlyOwner returns (bool) {
@@ -107,7 +120,7 @@ contract Tokenizer {
         require(from != address(0), "Invalid sender");
         require(to != address(0), "Invalid recipient");
         require(_balances[from] >= amount, "Insufficient balance");
-        require(_allowances[from][msg.sender] >= amount, "Insufficient power of attorney");
+        require(_allowances[from][msg.sender] >= amount, "Insufficient allowance");
 
         _allowances[from][msg.sender] -= amount;
         _balances[from] -= amount;

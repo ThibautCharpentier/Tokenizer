@@ -55,6 +55,10 @@ Ouvre un premier terminal et exécute :
 anvil
 ```
 Anvil démarre sur http://127.0.0.1:8545 et met à disposition 10 comptes de test avec des clées privées prédéfinies.
+On peut définir une variable d'environnement :
+```
+$ANVIL_URL=http://127.0.0.1:8545
+```
 
 ### Déployer le contrat sur Anvil
 Dans un second terminal, exécute le script de déploiement :
@@ -91,7 +95,7 @@ Cette étape permet de déployer le contrat sur le réseau de test public Ethere
 ### Prérequis et variables d'environnement
 Dans le fichier `.env` à la racine du projet, ajoute les variables suivantes :
 ```env
-SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/VOTRE_CLE_ALCHEMY
+SEPOLIA_URL=https://eth-sepolia.g.alchemy.com/v2/VOTRE_CLE_ALCHEMY
 PRIVATE_KEY=0xVOTRE_CLE_PRIVEE_METAMASK
 ETHERSCAN_API_KEY=VOTRE_CLE_API_ETHERSCAN
 ```
