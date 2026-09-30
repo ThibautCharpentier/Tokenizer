@@ -141,7 +141,7 @@ cast call <ADRESSE_DU_CONTRAT> "allowance(address,address)(uint256)" <ADRESSE_PR
 
 ### Minter via le multisig
 ```
-DATA=$(cast calldata "mint(address,uint256)" <ADRESSE_ANVIL> 100000000000000000000)
+DATA=$(cast calldata "mint(address,uint256)" <ADRESSE_CIBLE> 100000000000000000000)
 ```
 Le signataire 1 propose la transaction et la confirme automatiquement :
 ```
