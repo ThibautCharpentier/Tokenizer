@@ -2,6 +2,11 @@
 
 Tokenizer est un projet de l'École 42 dont l'objectif est de concevoir, tester et déployer un smart contract d'un jeton en respectant la norme **ERC-20** sur la blockchain **Ethereum**.
 
+## Status
+
+* Success
+* Grade: 120/100
+
 ## Choix techniques et plateforme
 
 ### Blockchain : Ethereum (Réseau de test Sepolia)
